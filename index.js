@@ -33,11 +33,33 @@ async function run() {
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
         const cookedItem = client.db('homeCookedFood').collection('itemCategories');
-        app.get ('/itemCategories', async (req, res) => {
+        const comments = client.db('homeCookedFood').collection('comments');
+
+        app.get('/allItem', async (req, res) => {
             const query = {};
             const items = await cookedItem.find(query).toArray();
             res.send(items);
             // console.log(items)
+        })
+
+        app.get('/allCatItems', async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email };
+            const dashItems = await cookedItem.find(query).toArray();
+            res.send(dashItems);
+        })
+
+        app.post('/allItem', async (req, res) => {
+            const dish = req.body;
+            console.log(dish);
+            const result = await cookedItem.insertOne(dish);
+            res.send(result);
+        })
+
+        app.get('/comments', async (req, res) => {
+            const query = {};
+            const comment = await comments.find(query).toArray();
+            res.send(comment);
         })
 
     } finally {
