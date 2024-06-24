@@ -62,6 +62,21 @@ async function run() {
             res.send(comment);
         })
 
+        app.post('/comments', async (req, res) => {
+            const comment = req.body;
+            console.log(comment);
+            const result = await comments.insertOne(comment);
+            res.send(result);
+        })
+
+        app.delete('/comments/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id);
+            const filter = { _id: ObjectId(id) };
+            const result = await comments.deleteOne(filter);
+            res.send(result);
+        });
+
     } finally {
         // Ensures that the client will close when you finish/error
         // await client.close();
