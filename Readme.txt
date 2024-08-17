@@ -1,4 +1,5 @@
 install express, cors, dotenv, mongodb
 set port
 add gitignore file
-delet item from dashboard
+delete item from dashboard
+add user in server

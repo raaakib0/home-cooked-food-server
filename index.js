@@ -34,6 +34,21 @@ async function run() {
 
         const cookedItem = client.db('homeCookedFood').collection('itemCategories');
         const comments = client.db('homeCookedFood').collection('comments');
+        const users = client.db('homeCookedFood').collection('user');
+        
+        app.get('/users', async (req, res) => {
+            const query = {};
+            const user = await users.find(query).toArray();
+            res.send(user);
+            // console.log(user)
+         })
+        
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            console.log(user);
+            const result = await users.insertOne(user);
+            res.send(result);
+        })
 
         app.get('/allItem', async (req, res) => {
             const query = {};
